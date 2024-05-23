@@ -48,6 +48,7 @@ data class Challenge(
 data class ChallengeCalendar(
     @EncodeDefault var maxStreak: Int = 0,
     @EncodeDefault var currentStreak: Int = 0,
+    @EncodeDefault var lastStreak: Int = 0,
     @EncodeDefault val list: MutableList<ChallengeDay> = mutableListOf()
 ) {
 
@@ -60,8 +61,12 @@ data class ChallengeCalendar(
             println("${last}${penultimate}${daysBetween}/t${currentStreak}")
 
             if (penultimate.checked && last.checked && daysBetween == Period.parse("P1D")) {
-                currentStreak + 1
-            } else if (last.checked) 1
+                lastStreak=currentStreak+1
+                currentStreak + 1      
+            } else if (last.checked) {
+                lastStreak=1
+                1
+            }
             else 0
         }
         maxStreak = if (maxStreak > currentStreak) maxStreak else currentStreak
